@@ -5,6 +5,7 @@ import useAuthListener from './hooks/use-auth-listener';
 import { UserContext } from './context/user'
 
 
+import ReactLoader from './components/loader';
 // Components
 const Login = lazy(() => import('./pages/Login.component'))
 const SignUp = lazy(() => import('./pages/SignUp.component'))
@@ -17,11 +18,11 @@ function App() {
 
   return (
     <UserContext.Provider value={{user}}>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<ReactLoader />}>
         <Switch>
-          <Route path={ROUTES.LOGIN} component={Login} />
-          <Route path={ROUTES.SIGNUP} component={SignUp} />
-          <Route path={ROUTES.DASHBOARD} component={Dashboard} />
+          <Route exact path={ROUTES.LOGIN} component={Login} />
+          <Route exact path={ROUTES.SIGNUP} component={SignUp} />
+          <Route exact path={ROUTES.DASHBOARD} component={Dashboard} />
           <Route component={Not_Found} />
         </Switch>
       </Suspense>

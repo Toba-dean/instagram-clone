@@ -17,7 +17,6 @@ const Suggestions = ({ userId, following, loggedInUserDocId }) => {
     if (userId) {
       suggestedProfiles();
     }
-    console.log(profiles);
   }, [userId]);
   // hint: use the firebase service (call using userId)
   // getSuggestedProfiles
