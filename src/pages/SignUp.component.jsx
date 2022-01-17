@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import * as ROUTES from '../../constants/routes'
+import * as ROUTES from '../constants/routes'
 
-import { FirebaseContext } from '../../context/firebase'
-import { doesUsernameExist } from '../../services/firebase,'
+import { FirebaseContext } from '../context/firebase'
+import { doesUsernameExist } from '../services/firebase,'
 
 
 const SignUp = () => {
@@ -27,7 +27,7 @@ const SignUp = () => {
 
         // Goes to authentication
         await createdResult.user.updateProfile({
-          displayname: username,
+          displayName: username,
         })
 
         // Goes to firestore

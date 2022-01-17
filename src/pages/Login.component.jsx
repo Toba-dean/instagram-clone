@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import * as ROUTES from '../../constants/routes'
+import * as ROUTES from '../constants/routes'
 
-import { FirebaseContext } from '../../context/firebase'
+import { FirebaseContext } from '../context/firebase'
 
 
 const Login = () => {
