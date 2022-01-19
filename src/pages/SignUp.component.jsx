@@ -13,7 +13,7 @@ const SignUp = () => {
   const [email, seteEail] = useState('')
   const [password, setePassword] = useState('')
   const [username, seteUsername] = useState('')
-  const [fullname, seteFullname] = useState('')
+  const [fullName, seteFullName] = useState('')
   const [error, setError] = useState('')
   const isInvalid = password === '' || email === ''
 
@@ -34,9 +34,10 @@ const SignUp = () => {
         await firebase.firestore().collection('users').add({
           userId: createdResult.user.uid,
           username: username.toLowerCase(),
-          fullname,
+          fullName,
           email: email.toLowerCase(),
           following: [],
+          followers: [],
           createdAt: Date.now()
         })
 
@@ -45,7 +46,7 @@ const SignUp = () => {
       } catch (error) {
         seteEail('');
         seteUsername('');
-        seteFullname('');
+        seteFullName('');
         setePassword('');
         setError(error.message)
       }
@@ -85,8 +86,8 @@ const SignUp = () => {
               type='text'
               placeholder='Fulname'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounder mb-2'
-              onChange={({ target }) => seteFullname(target.value)}
-              value={fullname}
+              onChange={({ target }) => seteFullName(target.value)}
+              value={fullName}
             />
             <input
               aria-label='Enter username'

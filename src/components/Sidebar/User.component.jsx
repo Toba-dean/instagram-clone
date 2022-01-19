@@ -7,10 +7,10 @@ const User = ({ username, fullName }) => {
   return !username || !fullName ? (
     <Skeleton count={1} height={61} />
     ) : (
-      <Link to={`/${username}`} className="grid grid-cols-4 gap-4 mb-6 items-center">
+      <Link to={`/p/${username}`} className="grid grid-cols-4 gap-4 mb-6 items-center">
       <div className="flex items-center justify-between col-span-1">
         <img
-          className="rounded-full w-16 flex mr-3"
+          className="rounded-full flex mr-3 w-16"
           src={`/images/avatars/${username}.jpg`}
           alt=""
           onError={(e) => {
