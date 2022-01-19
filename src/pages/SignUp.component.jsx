@@ -84,7 +84,7 @@ const SignUp = () => {
             <input
               aria-label='Enter fullname'
               type='text'
-              placeholder='Fulname'
+              placeholder='Fullname'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounder mb-2'
               onChange={({ target }) => seteFullName(target.value)}
               value={fullName}
