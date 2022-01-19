@@ -18,7 +18,7 @@ const Header = ({ photosCount, followerCount, setFollowerCount, profile: { docId
     setFollowerCount({
       followerCount: isFollowingProfile ? followerCount - 1 : followerCount + 1
     });
-    // await toggleFollow(isFollowingProfile, user.docId, profileDocId, profileUserId, user.userId);
+    await toggleFollow(isFollowingProfile, user.docId, profileDocId, profileUserId, user.userId);
   };
 
   useEffect(() => {
