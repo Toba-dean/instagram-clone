@@ -129,8 +129,8 @@ export async function getPhotos(userId, following) {
   return photosWithUserDetails;
 }
 
+// Getting a reference to my photos
 export async function myPhotos(userId) {
-  // [5,4,2] => following
   const result = await firebase
     .firestore()
     .collection('photos')
