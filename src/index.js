@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import './index.css';
-import './styles/app.css'
+// import './styles/app.css'
 import { BrowserRouter } from 'react-router-dom';
 
 
