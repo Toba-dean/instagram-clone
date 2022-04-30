@@ -10,10 +10,10 @@ const SignUp = () => {
 
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext)
-  const [email, seteEail] = useState('')
-  const [password, setePassword] = useState('')
-  const [username, seteUsername] = useState('')
-  const [fullName, seteFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+  const [fullName, setFullName] = useState('')
   const [error, setError] = useState('')
   const isInvalid = password === '' || email === ''
 
@@ -21,6 +21,8 @@ const SignUp = () => {
     event.preventDefault();
 
     const usernameExist = await doesUsernameExist(username) 
+
+    // if no user with the username create a new user
     if(!usernameExist.length) {
       try {
         const createdResult = await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -44,10 +46,10 @@ const SignUp = () => {
         history.push(ROUTES.DASHBOARD)
 
       } catch (error) {
-        seteEail('');
-        seteUsername('');
-        seteFullName('');
-        setePassword('');
+        setEmail('');
+        setUsername('');
+        setFullName('');
+        setPassword('');
         setError(error.message)
       }
     }else {
@@ -61,9 +63,11 @@ const SignUp = () => {
 
   return (
     <div className='container flex mx-auto max-w-screen-md items-center h-screen'>
+
       <div className="flex w-3/5">
         <img src="/images/iphone-with-profile.jpg" alt="" />
       </div>
+
       <div className='flex flex-col w-2/5'>
         <div className='flex flex-col bg-white p-4 border items-center border-gray-primary mb-4 rounded' >
           <h1 className='flex justify-center w-full'>
@@ -78,7 +82,7 @@ const SignUp = () => {
               type='text'
               placeholder='E-mail address'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounder mb-2'
-              onChange={({ target }) => seteEail(target.value)}
+              onChange={({ target }) => setEmail(target.value)}
               value={email}
             />
             <input
@@ -86,7 +90,7 @@ const SignUp = () => {
               type='text'
               placeholder='Fullname'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounder mb-2'
-              onChange={({ target }) => seteFullName(target.value)}
+              onChange={({ target }) => setFullName(target.value)}
               value={fullName}
             />
             <input
@@ -94,7 +98,7 @@ const SignUp = () => {
               type='text'
               placeholder='Username'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounder mb-2'
-              onChange={({ target }) => seteUsername(target.value)}
+              onChange={({ target }) => setUsername(target.value)}
               value={username}
             />
             <input
@@ -102,7 +106,7 @@ const SignUp = () => {
               type='password'
               placeholder='Password'
               className='text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounder mb-2'
-              onChange={({ target }) => setePassword(target.value)}
+              onChange={({ target }) => setPassword(target.value)}
               value={password}
             />
             <button 
@@ -112,6 +116,7 @@ const SignUp = () => {
             >Sign Up</button> 
           </form>
         </div>
+
         <div className="flex item-center justufy-center flex-col w-full bg-white p-4 border border-gray-primary rounded">
           <p className='text-sm'>
             Have an account? {' '}
@@ -120,7 +125,9 @@ const SignUp = () => {
             </Link>
           </p>
         </div>
+
       </div>
+
     </div>
   )
 }

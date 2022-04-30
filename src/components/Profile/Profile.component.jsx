@@ -17,7 +17,7 @@ export const UserProfile = ({ user }) => {
 
   const [{ profile, photosCollection, followerCount }, dispatch] = useReducer(
     reducer,
-    initialState
+    initialState 
   );
 
   useEffect(() => {

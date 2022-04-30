@@ -5,7 +5,7 @@ import Header from './Header.component'
 import Footer from './Footer.component'
 import Image from './Images.component'
 import Actions from './Actions.component'
-import Comment from './Comments.component'
+import Comment from './Comments.component' 
 
 const Post = ({ content }) => {
 

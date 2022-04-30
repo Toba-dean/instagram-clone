@@ -6,8 +6,9 @@ import { UserContext } from './context/user'
 
 
 import ProtectedRoutes from './helpers/protected-route'
-import ReactLoader from './components/loader';
 import IsUserLoggedIn from './helpers/IsUserLoggedIn';
+import ReactLoader from './components/loader';
+
 // Components
 const Login = lazy(() => import('./pages/Login.component'))
 const SignUp = lazy(() => import('./pages/SignUp.component'))

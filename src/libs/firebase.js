@@ -20,4 +20,6 @@ export const firebase = Firebase.initializeApp(firebaseConfig);
 export const  { FieldValue } = Firebase.firestore;
 export const auth = Firebase.auth(firebase)
 
+
+// sending the seed file to the databae/
 // seedDatabase(firebase)

@@ -18,7 +18,7 @@ const Photos = ({ photos }) => {
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
                       fill="currentColor"
-                      className="w-8 mr-4"
+                      className="w-8 mr-4" 
                     >
                       <path
                         fillRule="evenodd"

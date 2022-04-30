@@ -14,7 +14,7 @@ const Comment = ({ docId, comments: allComments, posted, commentInput }) => {
     setCommentsSlice(commentsSlice + 3);
   };
 
-  return (
+  return ( 
     <div>
       <div className="p-4 pt-1 pb-4">
         {comments.slice(0, commentsSlice).map((item) => (

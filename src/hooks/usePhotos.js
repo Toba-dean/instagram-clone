@@ -5,7 +5,7 @@ import { UserContext } from '../context/user';
 
 const usePhotos = () => {
 
-  const { user: { uid: userId ='' } } = useContext(UserContext)
+  const { user: { uid: userId = '' } } = useContext(UserContext)
   const [photos, setPhotos] = useState(null);
   // console.log(userId);
 
@@ -13,14 +13,13 @@ const usePhotos = () => {
    async function getTimelinePhotos() {
     const [{ following }] = await getUserByUserId(userId);
     let followedUserPhotos = [];
-    let myPhoto = []
 
     if(following.length > 0) {
-      followedUserPhotos = await getPhotos(userId, following);
+      followedUserPhotos = await getPhotos(userId, following); 
     }
 
     followedUserPhotos.sort((a, b) => b.dateCreated - a.dateCreated);
-    setPhotos(followedUserPhotos);
+    setPhotos(followedUserPhotos); 
    }
    getTimelinePhotos()
  }, [userId])

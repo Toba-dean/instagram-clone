@@ -1,5 +1,7 @@
 import { firebase, FieldValue } from '../libs/firebase'
 
+
+// Checking if the user exists in the database.
 export const doesUsernameExist = async (username) => {
   const result = await firebase
     .firestore()
@@ -15,6 +17,7 @@ export const doesUsernameExist = async (username) => {
   )
 }
 
+// check if user exists by username and return an array of the user.
 export const getUserByUsername = async (username) => {
   const result = await firebase
     .firestore()
@@ -30,7 +33,7 @@ export const getUserByUsername = async (username) => {
     return user
 }
 
-// get user from the firestore where userId === userId (passed from the auth)
+// query logged user from the firestore where userId === userId (passed from the auth)... simply gets the user by ID
 export async function getUserByUserId(userId) {
   const result = await firebase.firestore().collection('users').where('userId', '==', userId).get();
   const user = result.docs.map((item) => ({
@@ -38,9 +41,12 @@ export async function getUserByUserId(userId) {
     docId: item.id
   }));
 
-  return user;
+  return user; 
 }
 
+// this also brings the user array checking for username and destructures it to an {} 
+// this checks the photos collection where photo userId === logged user userId 
+// this then returns an array of the photos of the loggedin user (username)
 export async function getUserPhotosByUsername(username) {
   const [user] = await getUserByUsername(username);
   const result = await firebase
@@ -58,6 +64,9 @@ export async function getUserPhotosByUsername(username) {
 }
 
 // check all conditions before limit results
+// so i'm returning in this func an array that contains profile that: 
+// -> is not mine i.e(userId)
+// -> i am not following. i.e the profile userId is not in my following array.
 export async function getSuggestedProfiles(userId, following) {
   const result = await firebase.firestore().collection('users').limit(10).get();
 
@@ -69,12 +78,13 @@ export async function getSuggestedProfiles(userId, following) {
   // return profiles; 
 }
 
-export async function updateLoggedInUserFollowing(loggedInUserDocId, // currently logged in user document id (karl's profile)
-profileId, // the user that karl requests to follow
+// this updates my(logged in user) own array of the new following i.e following[+ profileId], when i follow a new suggested account.
+export async function updateLoggedInUserFollowing(loggedInUserDocId, // currently logged in user document id
+  profileId, // the user that karl requests to follow
   isFollowingProfile // true/false (am i currently following this person?)
 ) {
   return firebase
-    .firestore()
+    .firestore()                            
     .collection('users')
     .doc(loggedInUserDocId)
     .update({
@@ -84,6 +94,7 @@ profileId, // the user that karl requests to follow
     });
 }
 
+// this updates my own array of the new follower i.e follower[+ profileId] , when a new user follows my(logged in user) account.
 export async function updateFollowedUserFollowers(
   profileDocId, // currently logged in user document id (karl's profile)
   loggedInUserDocId, // the user that karl requests to follow
@@ -100,6 +111,8 @@ export async function updateFollowedUserFollowers(
     });
 }
 
+
+// 
 export async function getPhotos(userId, following) {
   // [5,4,2] => following
   const result = await firebase
@@ -108,10 +121,13 @@ export async function getPhotos(userId, following) {
     .where('userId', 'in', following)
     .get();
 
+    // give an array of the following users photos
   const userFollowedPhotos = result.docs.map((photo) => ({
     ...photo.data(),
     docId: photo.id
   }));
+
+  // check if logged in user have liked the following users photo.
   const photosWithUserDetails = await Promise.all(
     userFollowedPhotos.map(async (photo) => {
       let userLikedPhoto = false;
@@ -119,14 +135,17 @@ export async function getPhotos(userId, following) {
         userLikedPhoto = true;
       }
       // photo.userId = 2
+      // get raphael details 
       const user = await getUserByUserId(photo.userId);
+
       // raphael
       const { username } = user[0];
+
       return { username, ...photo, userLikedPhoto };
     })
   );
 
-  return photosWithUserDetails;
+  return photosWithUserDetails;  // { username of the owner of photos, allPhotos, bool }
 }
 
 // Getting a reference to my photos
@@ -160,11 +179,15 @@ export async function myPhotos(userId) {
   return myPhotoDetails;
 }
 
+// check the user collection 
+// -> if the username === logged in user username
+// -> also check the loged in user following [] if it contains the profile searched docId
+// returns the logged in user [] that contains the profileUser as the result.
 export async function isUserFollowingProfile(loggedInUserUsername, profileUserId) {
   const result = await firebase
     .firestore()
     .collection('users')
-    .where('username', '==', loggedInUserUsername) // karl (active logged in user)
+    .where('username', '==', loggedInUserUsername) // dean (active logged in user)
     .where('following', 'array-contains', profileUserId)
     .get();
 
@@ -183,13 +206,13 @@ export async function toggleFollow(
   profileUserId,
   followingUserId
 ) {
-  // 1st param: karl's doc id
+  // 1st param: dean's doc id
   // 2nd param: raphael's user id
-  // 3rd param: is the user following this profile? e.g. does karl follow raphael? (true/false)
+  // 3rd param: is the user following this profile? e.g. does dean follow raphael? (true/false)
   await updateLoggedInUserFollowing(activeUserDocId, profileUserId, isFollowingProfile);
 
-  // 1st param: karl's user id
+  // 1st param: dean's user id
   // 2nd param: raphael's doc id
-  // 3rd param: is the user following this profile? e.g. does karl follow raphael? (true/false)
+  // 3rd param: is the user following this profile? e.g. does dean follow raphael? (true/false)
   await updateFollowedUserFollowers(profileDocId, followingUserId, isFollowingProfile);
 }

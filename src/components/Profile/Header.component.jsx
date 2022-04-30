@@ -10,11 +10,11 @@ const Header = ({ photosCount, followerCount, setFollowerCount, profile: { docId
 
   const { user: loggedInUser } = useContext(UserContext);
   const { user } = useUser(loggedInUser?.uid);
-  const [isFollowingProfile, setIsFollowingProfile] = useState(null);
+  const [isFollowingProfile, setIsFollowingProfile] = useState(false);
   const activeBtnFollow = user?.username && user?.username !== profileUsername;
 
-  const handleToggleFollow = async () => {
-    setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
+  const handleToggleFollow = async () => { 
+    setIsFollowingProfile(isFollowingProfile => !isFollowingProfile);
     setFollowerCount({
       followerCount: isFollowingProfile ? followerCount - 1 : followerCount + 1
     });
@@ -24,6 +24,7 @@ const Header = ({ photosCount, followerCount, setFollowerCount, profile: { docId
   useEffect(() => {
     const isLoggedInUserFollowingProfile = async () => {
       const isFollowing = await isUserFollowingProfile(user.username, profileUserId);
+      // the !! converts isFollowing to a truty value.
       setIsFollowingProfile(!!isFollowing);
     };
 

@@ -5,11 +5,9 @@ import usePhotos from '../hooks/usePhotos';
 import Post from './Post/Post.component';
 
 const Timeline = () => {
-
+ 
   const { photos } = usePhotos()
-  const { photo } = useMyPhotos()
-
-  console.log(photos, photo);
+  // const { photo } = useMyPhotos()
 
   return (
     <div className='container col-span-2'>

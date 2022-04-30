@@ -29,7 +29,7 @@ const ProfilePage = () => {
       <Header />
       <div className="mx-auto max-w-screen-lg">
         <UserProfile user={user} />
-      </div>
+      </div> 
     </div>
   ) : null;
 }

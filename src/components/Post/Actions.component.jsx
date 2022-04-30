@@ -12,7 +12,7 @@ const Actions = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
 
   const handleToggleLiked = async () => {
     setToggleLiked((toggleLiked) => !toggleLiked);
-
+ 
     await firebase
       .firestore()
       .collection('photos')

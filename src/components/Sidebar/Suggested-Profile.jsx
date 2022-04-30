@@ -17,7 +17,7 @@ const SuggestedProfile = ({ profileDocId, username, profileId, userId, loggedInU
   }
 
   return  !followed ? (
-    <div className="flex flex-row items-center align-items justify-between">
+    <div className="flex flex-row items-center align-items justify-between"> 
       <div className="flex items-center justify-between">
         <img
           className="rounded-full w-8 flex mr-3"

@@ -5,11 +5,14 @@ import Suggestions from "./Suggestions.component";
 
 export default function Sidebar() {
 
-  const { user: { docId = '', fullName, username, userId, following } } = useUser();
-
+  const { user: { docId = '', fullName, username, userId, following } } = useUser(); 
+  
   return (
     <div className="p-4">
+      {/* currently logged in user */}
       <User username={username} fullName={fullName} />
+
+      {/* showing people to follow and ... */}
       <Suggestions userId={userId} following={following} loggedInUserDocId={docId} />
     </div>
   )
