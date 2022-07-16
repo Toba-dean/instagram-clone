@@ -1,5 +1,6 @@
 import Loader from 'react-loader-spinner';
 
+// loading animation
 export default function ReactLoader() {
   return (
     <Loader

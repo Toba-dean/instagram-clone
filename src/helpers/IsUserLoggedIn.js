@@ -8,10 +8,12 @@ export default function IsUserLoggedIn({ user, loggedInPath, children, ...rest }
     <Route
       {...rest}
       render={({ location }) => {
+        // if there is no logged in user render the children
         if (!user) {
           return children
         }
 
+        // if user redirect to the loggedInPath
         if (user) {
           return (
             <Redirect

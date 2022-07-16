@@ -12,6 +12,7 @@ import { firebase, FieldValue } from './libs/firebase';
 import { FirebaseContext } from './context/firebase'
 
 render(
+  // wrapping the app with the context(Firebase) passes the value state to the entire app.
   <React.StrictMode>
     <FirebaseContext.Provider value={{firebase, FieldValue}}>
       <BrowserRouter>

@@ -20,19 +20,20 @@ const SignUp = () => {
   const handleSignup = async (event) => {
     event.preventDefault();
 
-    const usernameExist = await doesUsernameExist(username) 
+    // check if user with the entered username exist in the firestore db
+    const usernameExist = await doesUsernameExist(username);
 
     // if no user with the username create a new user
-    if(!usernameExist.length) {
+    if (!usernameExist.length) {
       try {
         const createdResult = await firebase.auth().createUserWithEmailAndPassword(email, password);
 
-        // Goes to authentication
+        // set the displayName to username, this goes to the firebase authentication
         await createdResult.user.updateProfile({
           displayName: username,
         })
 
-        // Goes to firestore
+        // Goes to firestore, add the new user into the DB
         await firebase.firestore().collection('users').add({
           userId: createdResult.user.uid,
           username: username.toLowerCase(),
@@ -43,6 +44,7 @@ const SignUp = () => {
           createdAt: Date.now()
         })
 
+        // on successful sign up redirect to the dashboard.
         history.push(ROUTES.DASHBOARD)
 
       } catch (error) {
@@ -52,7 +54,7 @@ const SignUp = () => {
         setPassword('');
         setError(error.message)
       }
-    }else {
+    } else {
       setError('Username already exists, please try another.')
     }
   }
@@ -109,11 +111,11 @@ const SignUp = () => {
               onChange={({ target }) => setPassword(target.value)}
               value={password}
             />
-            <button 
+            <button
               type='submit'
               disabled={isInvalid}
               className={`bg-blue-medium text-white w-full h-8 font-bold rounded ${isInvalid && 'opacity-50'}`}
-            >Sign Up</button> 
+            >Sign Up</button>
           </form>
         </div>
 

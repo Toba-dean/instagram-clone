@@ -2,7 +2,7 @@ import { firebase, FieldValue } from '../libs/firebase'
 
 
 // Checking if the user exists in the database.
-export const doesUsernameExist = async (username) => {
+export const doesUsernameExist = async username => {
   const result = await firebase
     .firestore()
     .collection('users')
@@ -11,14 +11,12 @@ export const doesUsernameExist = async (username) => {
 
   // console.log(result);
 
-  return result.docs.map(user => (
-    user.data().length > 0
-    )
-  )
+  // retrun an array of user with the username passed.
+  return result.docs.map(user => (user.data().length > 0))
 }
 
 // check if user exists by username and return an array of the user.
-export const getUserByUsername = async (username) => {
+export const getUserByUsername = async username => {
   const result = await firebase
     .firestore()
     .collection('users')

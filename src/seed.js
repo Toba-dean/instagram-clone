@@ -1,5 +1,5 @@
-/* eslint-disable no-plusplus */
-// NOTE: replace 'NvPY9M9MzFTARQ6M816YAzDJxZ72' with your Firebase auth user id (can be taken from Firebase)
+// this just the file to be added to the db
+
 export function seedDatabase(firebase) {
   const users = [
     {
@@ -40,12 +40,12 @@ export function seedDatabase(firebase) {
     }
   ];
 
-  // eslint-disable-next-line prefer-const
+  // this craetes a collection of users and adds the user to it
   for (let k = 0; k < users.length; k++) {
     firebase.firestore().collection('users').add(users[k]);
   }
 
-  // eslint-disable-next-line prefer-const
+  // create a photos collection and add photos of user with uid === 2 to it
   for (let i = 1; i <= 5; ++i) {
     firebase
       .firestore()
@@ -71,29 +71,30 @@ export function seedDatabase(firebase) {
         dateCreated: Date.now()
       });
   }
-  for (let j = 1; j <= 3; ++j) {
-    firebase
-      .firestore()
-      .collection('photos')
-      .add({
-        photoId: j,
-        userId: '84A6NcCWu6WMHZWozYG5ArTJbIA2',
-        imageSrc: `/images/users/dean/${j}.jpg`,
-        caption: 'Saint George and the Dragon',
-        likes: [],
-        comments: [
-          {
-            displayName: 'dali',
-            comment: 'Love this place, looks like my animal farm!'
-          },
-          {
-            displayName: 'orwell',
-            comment: 'Would you mind if I used this picture?'
-          }
-        ],
-        userLatitude: '40.7128°',
-        userLongitude: '74.0060°',
-        dateCreated: Date.now()
-      });
-  }
+
+  // for (let j = 1; j <= 3; ++j) {
+  //   firebase
+  //     .firestore()
+  //     .collection('photos')
+  //     .add({
+  //       photoId: j,
+  //       userId: '84A6NcCWu6WMHZWozYG5ArTJbIA2',
+  //       imageSrc: `/images/users/dean/${j}.jpg`,
+  //       caption: 'Saint George and the Dragon',
+  //       likes: [],
+  //       comments: [
+  //         {
+  //           displayName: 'dali',
+  //           comment: 'Love this place, looks like my animal farm!'
+  //         },
+  //         {
+  //           displayName: 'orwell',
+  //           comment: 'Would you mind if I used this picture?'
+  //         }
+  //       ],
+  //       userLatitude: '40.7128°',
+  //       userLongitude: '74.0060°',
+  //       dateCreated: Date.now()
+  //     });
+  // }
 }

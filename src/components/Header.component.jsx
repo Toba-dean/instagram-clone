@@ -5,11 +5,15 @@ import * as ROUTES from '../constants/routes'
 import { Link, useHistory } from "react-router-dom"
 import { DEFAULT_IMAGE_PATH } from '../constants/paths'
 
-const Header = () => { 
+const Header = () => {
 
-  const history = useHistory()
-  const { firebase } = useContext(FirebaseContext)
-  const { user } = useContext(UserContext)
+  const history = useHistory();
+
+  // i can use this context cos i already wrapped the App in the FirebaseContext. 
+  const { firebase } = useContext(FirebaseContext);
+
+  // i can use this context cos i already wrapped the Routes in the FirebaseContext. 
+  const { user } = useContext(UserContext);
 
 
   return (
@@ -27,6 +31,7 @@ const Header = () => {
 
           <div className="text-gray-700 text-center flex items-center align-items">
             {
+              // if user render the dashboard page
               user ? (
                 <>
                   <Link to={ROUTES.DASHBOARD} aria-label='dashboard'>
@@ -45,6 +50,7 @@ const Header = () => {
                       />
                     </svg>
                   </Link>
+                  {/* on sign out push me to the login page */}
                   <button
                     type="button"
                     title="Sign Out"
@@ -74,6 +80,7 @@ const Header = () => {
                       />
                     </svg>
                   </button>
+                  {/* if user, link to user profile page on click the users image */}
                   {user && (
                     <div className="flex items-center cursor-pointer">
                       <Link to={`/p/${user?.displayName.toLowerCase()}`}>
@@ -81,7 +88,7 @@ const Header = () => {
                           className="rounded-full h-8 w-8 flex"
                           src={`/images/avatars/${user?.displayName}.jpg`}
                           alt={`${user?.displayName} profile`}
-                          onError={(e) => {
+                          onError={e => {
                             e.target.src = DEFAULT_IMAGE_PATH;
                           }}
                         />
@@ -90,6 +97,7 @@ const Header = () => {
                   )}
                 </>
               ) : (
+                // else show the loin and sign up button.
                 <>
                   <Link to={ROUTES.LOGIN}>
                     <button
@@ -112,7 +120,7 @@ const Header = () => {
             }
           </div>
 
-        </div>  
+        </div>
       </div>
     </header>
   )

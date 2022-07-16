@@ -14,12 +14,13 @@ const Login = () => {
   const [error, setError] = useState('')
   const isInvalid = password === '' || email === ''
 
+  // when the login button is clicked sign in user with email and password and push the user to the dashboard.
   const handleLogin = async (event) => {
     event.preventDefault();
 
     try{
-      await firebase.auth().signInWithEmailAndPassword(email, password)
-      history.push(ROUTES.DASHBOARD)
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      history.push(ROUTES.DASHBOARD);
     }catch(error) {
       setEmail('');
       setPassword('');
@@ -64,13 +65,14 @@ const Login = () => {
             />
             <button 
               type='submit'
+              // disable button if any of the fields are empty.
               disabled={isInvalid}
               className={`bg-blue-medium text-white w-full h-8 font-bold rounded ${isInvalid && 'opacity-50'}`}
             >Log In</button> 
           </form>
         </div>
 
-        <div className="flex item-center justufy-center flex-col w-full bg-white p-4 border border-gray-primary rounded">
+        <div className="flex item-center justify-center flex-col w-full bg-white p-4 border border-gray-primary rounded">
           <p className='text-sm'>
             Don't have an account? {' '}
             <Link to={ROUTES.SIGNUP} className='font-bold text-blue-medium'>
