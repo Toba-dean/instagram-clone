@@ -61,6 +61,7 @@ export async function getUserPhotosByUsername(username) {
       docId: photo.id
     }));
     
+    // console.log(photos);
     return photos
 }
 

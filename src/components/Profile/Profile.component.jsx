@@ -22,7 +22,9 @@ export const UserProfile = ({ user }) => {
 
   useEffect(() => {
     async function getProfileInfoAndPhotos() {
+      // get the photos of the users username passed.
       const photos = await getUserPhotosByUsername(user.username);
+      
       dispatch({ profile: user, photosCollection: photos, followerCount: user.followers.length });
     }
     if(user.username) {

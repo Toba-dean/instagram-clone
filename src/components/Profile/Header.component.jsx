@@ -6,11 +6,17 @@ import { isUserFollowingProfile, toggleFollow } from '../../services/firebase,';
 import { UserContext } from '../../context/user';
 import { DEFAULT_IMAGE_PATH } from '../../constants/paths';
 
+// profile is the user gotten from the params.
 const Header = ({ photosCount, followerCount, setFollowerCount, profile: { docId: profileDocId, userId: profileUserId, fullName, followers, following, username: profileUsername } }) => {
 
+  // get from auth.
   const { user: loggedInUser } = useContext(UserContext);
+
+  // get from DB
   const { user } = useUser(loggedInUser?.uid);
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
+  
+  // make this true if logged username not equal to profile username
   const activeBtnFollow = user?.username && user?.username !== profileUsername;
 
   const handleToggleFollow = async () => { 
@@ -41,7 +47,7 @@ const Header = ({ photosCount, followerCount, setFollowerCount, profile: { docId
             className="rounded-full h-40 w-40 flex"
             alt={`${fullName} profile picture`}
             src={`/images/avatars/${profileUsername}.jpg`}
-            onError={(e) => {
+            onError={e => {
               e.target.src = DEFAULT_IMAGE_PATH;
             }}
           />
@@ -49,12 +55,15 @@ const Header = ({ photosCount, followerCount, setFollowerCount, profile: { docId
           <Skeleton circle height={150} width={150} count={1} />
         )}
       </div>
+
       <div className="flex items-center justify-center flex-col col-span-2">
         <div className="container flex items-center">
           <p className="text-2xl mr-4">{profileUsername}</p>
+          {/* if activebtnfollow and am following */}
           {activeBtnFollow && isFollowingProfile === null ? (
             <Skeleton count={1} width={80} height={32} />
           ) : (
+            // show follow button
             activeBtnFollow && (
               <button
                 className="bg-blue-medium font-bold text-sm rounded text-white w-20 h-8"
@@ -71,6 +80,7 @@ const Header = ({ photosCount, followerCount, setFollowerCount, profile: { docId
             )
           )}
         </div>
+        
         <div className="container flex mt-4">
           {!followers || !following ? (
             <Skeleton count={1} width={677} height={24} />

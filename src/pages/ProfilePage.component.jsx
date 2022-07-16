@@ -8,11 +8,13 @@ import { UserProfile } from '../components/Profile/Profile.component';
 
 const ProfilePage = () => {
 
+  // get the username from the parameters
   const { username } = useParams()
   const [user, setUser] = useState(null);
   const history = useHistory();
 
   useEffect(() => {
+    // check if user with user name exists.
     async function checkUserExists() {
       const [user] = await getUserByUsername(username);
       if (user?.userId) {
