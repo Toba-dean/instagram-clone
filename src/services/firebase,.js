@@ -66,24 +66,24 @@ export async function getUserPhotosByUsername(username) {
 
 // check all conditions before limit results
 // so i'm returning in this func an array that contains profile that: 
-// -> is not mine i.e(userId)
+// -> is not mine i.e logged in user(userId)
 // -> i am not following. i.e the profile userId is not in my following array.
 export async function getSuggestedProfiles(userId, following) {
   const result = await firebase.firestore().collection('users').limit(10).get();
 
+  // get the an array of users that are not in the following array.
   return result.docs.map(user => ({
     ...user.data(),
     docId: user.id
   })).filter(profile => profile.userId !== userId && !following.includes(profile.userId))
-
-  // return profiles; 
 }
 
 // this updates my(logged in user) own array of the new following i.e following[+ profileId], when i follow a new suggested account.
 export async function updateLoggedInUserFollowing(loggedInUserDocId, // currently logged in user document id
-  profileId, // the user that karl requests to follow
+  profileId, // the user that i requests to follow
   isFollowingProfile // true/false (am i currently following this person?)
 ) {
+  // get my document from the users collection, update my following arrat 
   return firebase
     .firestore()                            
     .collection('users')
@@ -97,8 +97,8 @@ export async function updateLoggedInUserFollowing(loggedInUserDocId, // currentl
 
 // this updates my own array of the new follower i.e follower[+ profileId] , when a new user follows my(logged in user) account.
 export async function updateFollowedUserFollowers(
-  profileDocId, // currently logged in user document id (karl's profile)
-  loggedInUserDocId, // the user that karl requests to follow
+  profileDocId, // the user that i requests to follow
+  loggedInUserDocId, // currently logged in user document id (karl's profile)
   isFollowingProfile // true/false (am i currently following this person?)
 ) {
   return firebase

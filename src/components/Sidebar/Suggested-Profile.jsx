@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getUserByUserId, updateLoggedInUserFollowing, updateFollowedUserFollowers } from '../../services/firebase,';
+import { updateLoggedInUserFollowing, updateFollowedUserFollowers } from '../../services/firebase,';
 
 const SuggestedProfile = ({ profileDocId, username, profileId, userId, loggedInUserDocId }) => {
 
@@ -10,20 +10,21 @@ const SuggestedProfile = ({ profileDocId, username, profileId, userId, loggedInU
 
   async function handleFollowUser() {
     setFollowed(true);
+    // update my following array
     await updateLoggedInUserFollowing(loggedInUserDocId, profileId, false);
+
+    // update followed users followers array.
     await updateFollowedUserFollowers(profileDocId, userId, false);
-    // const [user] = await getUserByUserId(userId);
-    // setActiveUser(user);
   }
 
-  return  !followed ? (
+  return !followed ? (
     <div className="flex flex-row items-center align-items justify-between"> 
       <div className="flex items-center justify-between">
         <img
           className="rounded-full w-8 flex mr-3"
           src={`/images/avatars/${username}.jpg`}
           alt=""
-          onError={(e) => {
+          onError={e => {
             e.target.src = `/images/avatars/default.png`;
           }}
         />

@@ -14,6 +14,7 @@ const Suggestions = ({ userId, following, loggedInUserDocId }) => {
       setProfiles(response);
     }
 
+    // if there is a logged in user then get suggested profiles
     if (userId) {
       suggestedProfiles();
     }
@@ -22,14 +23,14 @@ const Suggestions = ({ userId, following, loggedInUserDocId }) => {
   return !profiles ? (
     <Skeleton count={1} height={150} className="mt-5" />
     ) : profiles.length > 0 ? (
-    <div className="rounded flex flex-col">
+    <div className="rounded flex flex-col bg">
 
       <div className="text-sm flex items-center align-items justify-between mb-2">
         <p className="font-bold text-gray-base">Suggestions for you</p>
       </div>
 
       <div className="mt-4 grid gap-5">
-        {profiles.map((profile) => (
+        {profiles.map(profile => (
           <SuggestedProfile
             key={profile.docId}
             profileDocId={profile.docId}

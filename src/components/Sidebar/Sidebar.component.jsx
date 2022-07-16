@@ -10,10 +10,17 @@ export default function Sidebar() {
   return (
     <div className="p-4">
       {/* currently logged in user */}
-      <User username={username} fullName={fullName} />
+      <User 
+        username={username} 
+        fullName={fullName} 
+      />
 
-      {/* showing people to follow and ... */}
-      <Suggestions userId={userId} following={following} loggedInUserDocId={docId} />
+      {/* showing people to follow and if the userId is not in the following array */}
+      <Suggestions 
+        userId={userId} 
+        following={following} 
+        loggedInUserDocId={docId} 
+      />
     </div>
   )
 }
