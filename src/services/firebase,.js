@@ -23,22 +23,25 @@ export const getUserByUsername = async username => {
     .where('username', '==', username )
     .get()
 
-    const user = result.docs.map((item) => ({
+    const user = result.docs.map(item => ({
       ...item.data(),
       docId: item.id
     }));
   
+    // return the array of user with the username passed
     return user
 }
 
 // query logged user from the firestore where userId === userId (passed from the auth)... simply gets the user by ID
 export async function getUserByUserId(userId) {
   const result = await firebase.firestore().collection('users').where('userId', '==', userId).get();
-  const user = result.docs.map((item) => ({
+
+  const user = result.docs.map(item => ({
     ...item.data(),
     docId: item.id
   }));
 
+  // return the array of user with userId passed.
   return user; 
 }
 
@@ -110,9 +113,8 @@ export async function updateFollowedUserFollowers(
 }
 
 
-// 
 export async function getPhotos(userId, following) {
-  // [5,4,2] => following
+  // check if the userId passed is in the current logged users following array
   const result = await firebase
     .firestore()
     .collection('photos')
@@ -120,30 +122,33 @@ export async function getPhotos(userId, following) {
     .get();
 
     // give an array of the following users photos
-  const userFollowedPhotos = result.docs.map((photo) => ({
+  const userFollowedPhotos = result.docs.map(photo => ({
     ...photo.data(),
     docId: photo.id
   }));
 
   // check if logged in user have liked the following users photo.
   const photosWithUserDetails = await Promise.all(
-    userFollowedPhotos.map(async (photo) => {
+    userFollowedPhotos.map(async photo => {
       let userLikedPhoto = false;
+
+      // check the likes props array, if loggedin user id is in it
       if (photo.likes.includes(userId)) {
         userLikedPhoto = true;
       }
       // photo.userId = 2
       // get raphael details 
+      // get the owner of the photo
       const user = await getUserByUserId(photo.userId);
 
-      // raphael
+      // get the users username i.e raphael
       const { username } = user[0];
 
       return { username, ...photo, userLikedPhoto };
     })
   );
 
-  return photosWithUserDetails;  // { username of the owner of photos, allPhotos, bool }
+  return photosWithUserDetails;  // { username of the owner of photos, allPhotosInfo, bool(either liked or not.) }
 }
 
 // Getting a reference to my photos

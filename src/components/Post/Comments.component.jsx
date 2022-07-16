@@ -17,14 +17,19 @@ const Comment = ({ docId, comments: allComments, posted, commentInput }) => {
   return ( 
     <div>
       <div className="p-4 pt-1 pb-4">
-        {comments.slice(0, commentsSlice).map((item) => (
-          <p key={`${item.comment}-${item.displayName}`} className="mb-1">
+        {/* show only 3 comments */}
+        {comments.slice(0, commentsSlice).map(item => (
+          <p 
+            key={`${item.comment}-${item.displayName}`} className="mb-1"
+          >
             <Link to={`/p/${item.displayName}`}>
               <span className="mr-1 font-bold">{item.displayName}</span>
             </Link>
             <span>{item.comment}</span>
           </p>
         ))}
+
+        {/* if comment is more than 3 and the slice(3) is less than the comment length sow a button to show 3 more comments. */}
         {comments.length >= 3 && commentsSlice < comments.length && (
           <button
             className="text-sm text-gray-base mb-1 cursor-pointer focus:outline-none"
@@ -39,10 +44,13 @@ const Comment = ({ docId, comments: allComments, posted, commentInput }) => {
             View more comments
           </button>
         )}
+
+        {/* shoe posted image date. */}
         <p className="text-gray-base uppercase text-xs mt-2">
           {formatDistance(posted, new Date())} ago
         </p>
       </div>
+      
       <AddComments
         docId={docId}
         comments={comments}

@@ -9,7 +9,8 @@ const AddComments = ({ docId, comments, setComments, commentInput }) => {
   const { firebase, FieldValue } = useContext(FirebaseContext);
   const [comment, setComment] = useState('');
 
-  const handleSubmitComment = (event) => {
+  // on submit add new object of the comment and the displayname of the commenter to the comments array
+  const handleSubmitComment = event => {
     event.preventDefault();
 
     setComments([...comments, { displayName, comment }]);
@@ -29,7 +30,7 @@ const AddComments = ({ docId, comments, setComments, commentInput }) => {
       <form
         className="flex justify-between pl-0 pr-5"
         method="POST"
-        onSubmit={(event) =>
+        onSubmit={event =>
           comment.length >= 1 ? handleSubmitComment(event) : event.preventDefault()
         }
       >

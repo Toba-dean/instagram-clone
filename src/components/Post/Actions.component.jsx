@@ -5,14 +5,18 @@ import { UserContext } from '../../context/user';
 
 const Actions = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
 
+  // loggedIn user
   const { user: { uid: userId } } = useContext(UserContext);
   const [toggleLiked, setToggleLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useContext(FirebaseContext);
 
+  // on click the like button.
   const handleToggleLiked = async () => {
-    setToggleLiked((toggleLiked) => !toggleLiked);
+    // toggle like from true to false and vice versa.
+    setToggleLiked(toggleLiked => !toggleLiked);
  
+    // go to the firebase collection of photos and update the likes array in the photos object.
     await firebase
       .firestore()
       .collection('photos')
@@ -21,7 +25,8 @@ const Actions = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
         likes: toggleLiked ? FieldValue.arrayRemove(userId) : FieldValue.arrayUnion(userId)
       });
 
-    setLikes((likes) => (toggleLiked ? likes - 1 : likes + 1));
+      // if false i.e initial value, remove it from the like count
+    setLikes(likes => (toggleLiked ? likes - 1 : likes + 1));
   };
 
   return (
@@ -51,6 +56,8 @@ const Actions = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
               d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
             />
           </svg>
+          
+          {/* onclick the comment button icon, focus on the comment input section. */}
           <svg
             onClick={handleFocus}
             onKeyDown={(event) => {

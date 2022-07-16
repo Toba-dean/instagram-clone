@@ -5,7 +5,7 @@ import usePhotos from '../hooks/usePhotos';
 import Post from './Post/Post.component';
 
 const Timeline = () => {
- 
+
   const { photos } = usePhotos()
   // const { photo } = useMyPhotos()
 
@@ -23,13 +23,16 @@ const Timeline = () => {
         )
       } */}
       {
+        // if no photo give a skeleton
         !photos ? (
           <>
-            <Skeleton count={4} width={640} height={500} className="mb-5"/>
+            <Skeleton count={4} width={640} height={500} className="mb-5" />
           </>
         ) : photos?.length > 0 ? (
-          photos.map(content =>  <Post key={content.docId} content={content} />)
+          // if photo show the post
+          photos.map(content => <Post key={content.docId} content={content} />)
         ) : (
+          // following nobody 
           <p className='text-center text-2xl'>Follow people to see photos</p>
         )
       }
@@ -38,4 +41,3 @@ const Timeline = () => {
 }
 
 export default Timeline
- 
